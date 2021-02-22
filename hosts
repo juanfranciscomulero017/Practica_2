@@ -1,9 +1,12 @@
+[nfs-server-nodes]
+40.122.67.4
+
 [kubernetes-master-nodes]
-192.168.10.20
+40.122.130.30
 
 [kubernetes-worker-nodes]
-192.168.10.22
-192.168.10.21
+23.99.176.78
+40.78.152.155
 
 
 [kubernetes:children]
@@ -11,7 +14,12 @@ kubernetes-worker-nodes
 kubernetes-master-nodes
 
 [kubernetes:vars]
-ansible_password=root
-ansible_ssh_user=root
+#ansible_password=root
+ansible_ssh_user=adminUsername
 
+[nfs:children]
+nfs-server-nodes
 
+[nfs:vars]
+#ansible_password=root
+ansible_ssh_user=adminUsername

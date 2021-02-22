@@ -1,4 +1,4 @@
-ad_addr: 192.168.10.20
+ad_addr: 10.0.1.10
 cidr_v: 10.244.0.0/16
 
 packages:

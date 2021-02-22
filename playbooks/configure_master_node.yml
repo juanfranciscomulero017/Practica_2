@@ -34,10 +34,3 @@
      chmod 700 get_helm.sh
      sh get_helm.sh
      rm -f get_helm.sh
-
-  - name: Install ansibleAWX
-    shell: |
-     helm repo add adwerx https://adwerx.github.io/charts
-     helm repo update
-     kubectl create namespace ansible-awx
-     helm install -g adwerx/awx --namespace=ansible-awx
