@@ -1,12 +1,12 @@
 [nfs-server-nodes]
-40.122.67.4
+52.173.242.194
 
 [kubernetes-master-nodes]
-40.122.130.30
+52.173.242.45
 
 [kubernetes-worker-nodes]
-23.99.176.78
-40.78.152.155
+52.173.242.103
+52.173.243.6
 
 
 [kubernetes:children]
