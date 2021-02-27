@@ -1,0 +1,28 @@
+---
+- hosts: kubernetes-master-nodes
+  become: yes
+
+  tasks:
+    - name: Install ingress-nginx
+      shell: |
+       kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.44.0/deploy/static/provider/baremetal/deploy.yaml
+
+    - name: Install longhorn
+      shell: |
+       kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/v1.1.0/deploy/longhorn.yaml
+
+    - name: Create auth
+      shell: |
+       USER=admin; PASSWORD=admin; echo "${USER}:$(openssl passwd -stdin -apr1 <<< ${PASSWORD})" >> auth
+
+    - name: Create secret
+      shell: |
+       kubectl -n longhorn-system create secret generic basic-auth --from-file=auth
+
+    - name: Delete webhoob ingress
+      shell: |
+       kubectl delete validatingwebhookconfigurations ingress-nginx-admission
+
+    - name: Create ingress
+      shell: |
+       kubectl apply -f https://github.com/juanfranciscomulero017/Practica_2/ansible/longhorn-ingress.yaml
