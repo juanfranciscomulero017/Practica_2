@@ -1,4 +1,5 @@
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/doc
+#Indicamos el proveedor cloud
 terraform {
   required_providers {
     azurerm = {
@@ -18,6 +19,7 @@ provider "azurerm" {
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
+#Creamos un grupo de recursos para los objetos que iremos creando
 resource "azurerm_resource_group" "rg" {
     name     =  "kubernetes_rg"
     location = var.location

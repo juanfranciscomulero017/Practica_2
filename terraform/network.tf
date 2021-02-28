@@ -1,6 +1,5 @@
-# Creación de red
+# Creación de la red kubernetes
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network
-
 resource "azurerm_virtual_network" "myNet" {
     name                = "kubernetesnet"
     address_space       = ["10.0.0.0/16"]
@@ -12,9 +11,8 @@ resource "azurerm_virtual_network" "myNet" {
     }
 }
 
-# Creación de subnet
+# Creación de la subnet kubernetes
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet
-
 resource "azurerm_subnet" "mySubnet" {
     name                   = "terraformsubnet"
     resource_group_name    = azurerm_resource_group.rg.name
@@ -23,9 +21,10 @@ resource "azurerm_subnet" "mySubnet" {
 
 }
 
-# Create NIC
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
+########## Master node ##########
 
+# Creamos la tarjeta de Red del Master Node
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 resource "azurerm_network_interface" "myNic1" {
   name                = "vmnic${var.vmsB2s[count.index]}"
   count               = length(var.vmsB2s)
@@ -46,9 +45,8 @@ resource "azurerm_network_interface" "myNic1" {
 
 }
 
-# IP pública
+# Le asignamos una IP publica al Master Node
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
-
 resource "azurerm_public_ip" "myPublicIp1" {
   count               = length(var.vmsB2s)
   name                = "PublicIP${var.vmsB2s[count.index]}"
@@ -63,6 +61,10 @@ resource "azurerm_public_ip" "myPublicIp1" {
 
 }
 
+########## Worker node and NFS node ##########
+
+# Creamos la tarjeta de Red de los Worker nodes y el servidor NFS
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 resource "azurerm_network_interface" "myNic2" {
   name                = "vmnic${var.vmsBD1_v2[count.index]}"
   count               = length(var.vmsBD1_v2)
@@ -83,9 +85,8 @@ resource "azurerm_network_interface" "myNic2" {
 
 }
 
-# IP pública
+# Creamos una IP pública para los Worker nodes y el servidor NFS
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
-
 resource "azurerm_public_ip" "myPublicIp2" {
   count               = length(var.vmsBD1_v2)
   name                = "PublicIP${var.vmsBD1_v2[count.index]}"
