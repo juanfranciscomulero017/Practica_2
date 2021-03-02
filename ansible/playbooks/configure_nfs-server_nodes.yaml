@@ -4,17 +4,18 @@
   vars_files:
   - env_variables_nfs
   tasks:
+  #Instalamos el nfs-utils en los nodes nfs        
   - name: nfs-server
     shell: |
      dnf install nfs-utils -y
-  
+  #Iniciamos los servicios indicados en el archivo env
   - name: Starting and Enabling the required services
     service:
      name: "{{ item }}"
      state: started
      enabled: yes
     with_items: "{{ services }}"
-
+  #Habilitamos los puertos indicados en el archivo env
   - name: Allow Network Ports in Firewalld for nfs
     firewalld:
      port: "{{ item }}"

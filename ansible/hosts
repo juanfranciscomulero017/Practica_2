@@ -1,3 +1,5 @@
+#Defininción de los hosts
+
 [nfs-server-nodes]
 40.77.60.163
 
@@ -12,13 +14,13 @@
 kubernetes-worker-nodes
 kubernetes-master-nodes
 
+#Usuario ssh para el grupo kubernetes
 [kubernetes:vars]
-#ansible_password=root
 ansible_ssh_user=adminUsername
 
 [nfs:children]
 nfs-server-nodes
 
+#Usuario SSH para el grupo nfs
 [nfs:vars]
-#ansible_password=root
 ansible_ssh_user=adminUsername
